@@ -15,7 +15,7 @@ const option = {
     openapi: "3.0.0",
     info: {
       title: "TODO-WORKSPACE API",
-      version: "0.0.3",
+      version: "0.0.2",
       description: "This is a simple API for TODO-WORKSPACE",
     },
     servers: [
