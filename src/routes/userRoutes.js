@@ -14,7 +14,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /api/v1/users/:
+ * /tw/v1/users/:
  *   get:
  *     summary: Returns the list of all users
  *     tags: [Users]
@@ -74,7 +74,7 @@ router.get("/", getAllUsers);
 
 /**
  * @openapi
- * /api/v1/users/me:
+ * /tw/v1/users/me:
  *   get:
  *     summary: Get current logged-in user details
  *     description: Validates the session cookie and returns the user profile information
@@ -154,7 +154,7 @@ router.get("/me", authVerification, userVerification);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /tw/v1/users/{id}:
  *   get:
  *     summary: Returns the data of the user with the given id
  *     tags: [Users]
@@ -226,7 +226,7 @@ router.get("/:id", getUserById);
 
 /**
  * @openapi
- * /api/v1/users/create:
+ * /tw/v1/users/create:
  *   post:
  *     summary: Creates a new user
  *     tags: [Users]
@@ -312,7 +312,7 @@ router.post("/create", createUser);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /tw/v1/users/{id}:
  *   put:
  *     summary: Updates data of an existing user
  *     tags: [Users]
@@ -422,7 +422,7 @@ router.put("/:id", updateUser);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /tw/v1/users/{id}:
  *   delete:
  *     summary: Deletes an user record with given id
  *     tags: [Users]

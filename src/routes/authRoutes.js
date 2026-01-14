@@ -9,7 +9,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /api/v1/auth/login:
+ * /tw/v1/auth/login:
  *   post:
  *     summary: creates a token if user credentials are valid
  *     tags: [Auth]
@@ -117,7 +117,7 @@ router.post("/login", loginAuth);
 
 /**
  * @openapi
- * /api/v1/auth/register:
+ * /tw/v1/auth/register:
  *   post:
  *     summary: creates a token after creating new user
  *     tags: [Auth]
@@ -208,7 +208,7 @@ router.post("/register", registerAuth);
 
 /**
  * @openapi
- * /api/v1/auth/logout:
+ * /tw/v1/auth/logout:
  *   post:
  *     summary: replaces current token with expired one token with blank string as value
  *     tags: [Auth]

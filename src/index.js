@@ -30,14 +30,35 @@ const option = {
 const swaggerSpec = swaggerJSDoc(option);
 const app = express();
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5001",
+  "https://todo-workspace-backend.onrender.com",
+  "https://api.jeevanadhikari.com.np",
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-app.use("/api/v1/users", userRoutes);
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/workspaces", workspaceRoutes);
+app.use("/tw/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use("/tw/v1/users", userRoutes);
+app.use("/tw/v1/auth", authRoutes);
+app.use("/tw/v1/workspaces", workspaceRoutes);
 
 // TODO: Update the code so that the server starts only after the database is connected
 try {
