@@ -45,7 +45,7 @@ try {
 } catch (error) {
   console.log(error);
 } finally {
-  app.listen(5001, () => {
-    console.log("Server is running on port 5001");
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
   });
 }
