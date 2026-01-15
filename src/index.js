@@ -97,7 +97,7 @@ app.use("/tw/v1/users", userRoutes);
 app.use("/tw/v1/auth", authRoutes);
 app.use("/tw/v1/workspaces", workspaceRoutes);
 
-app.use(express.static(path.join(__dirname, "public/")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/{*path}", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
