@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUI, { serve } from "swagger-ui-express";
+import swaggerUI from "swagger-ui-express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -16,7 +16,7 @@ const option = {
     info: {
       title: "TODO-WORKSPACE API",
       version: "0.0.2",
-      description: "This is a simple API for TODO-WORKSPACE",
+      description: "This is a simple API for TODO-WORKSPACE.",
     },
     servers: [
       {
@@ -30,6 +30,15 @@ const option = {
     ],
   },
   apis: ["./src/routes/*.js", "./src/models/*.js"],
+};
+
+const swaggerOptions = {
+  swaggerOptions: {
+    supportedSubmitMethods:
+      process.env.NODE_ENV === "production"
+        ? []
+        : ["get", "post", "put", "delete", "patch"],
+  },
 };
 
 const swaggerSpec = swaggerJSDoc(option);
@@ -74,7 +83,11 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/tw/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use(
+  "/tw/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerSpec, swaggerOptions)
+);
 app.use("/tw/v1/users", userRoutes);
 app.use("/tw/v1/auth", authRoutes);
 app.use("/tw/v1/workspaces", workspaceRoutes);
