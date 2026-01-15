@@ -6,8 +6,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 
-import pkg from "../package.json" assert { type: json};
 import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -15,6 +15,10 @@ import workspaceRoutes from "./routes/workspaceRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const pkg = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8")
+);
 
 const option = {
   definition: {
@@ -100,7 +104,7 @@ app.use("/tw/v1/workspaces", workspaceRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/*", (req, res) => {
+app.get("/{*path}", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
