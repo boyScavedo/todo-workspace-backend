@@ -5,13 +5,15 @@ import swaggerUI from "swagger-ui-express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
+import { fileURLToPath } from "url";
 
 import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import workspaceRoutes from "./routes/workspaceRoutes.js";
 
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const option = {
   definition: {
@@ -95,10 +97,10 @@ app.use("/tw/v1/users", userRoutes);
 app.use("/tw/v1/auth", authRoutes);
 app.use("/tw/v1/workspaces", workspaceRoutes);
 
-app.use(express.static(path.join(__dirname, "src/public/")));
+app.use(express.static(path.join(__dirname, "public/")));
 
 app.get("/{*path}", (req, res) => {
-  res.sendFile(path.join(__dirname, "src", "public", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 async function startServer() {
