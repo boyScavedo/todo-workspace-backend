@@ -7,6 +7,7 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import pkg from "../package.json" assert { type: json};
 import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -20,7 +21,7 @@ const option = {
     openapi: "3.0.0",
     info: {
       title: "TODO-WORKSPACE API",
-      version: "0.0.2",
+      version: pkg.version,
       description: "This is a simple API for TODO-WORKSPACE.",
     },
     servers: [
@@ -99,7 +100,7 @@ app.use("/tw/v1/workspaces", workspaceRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/{*path}", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
