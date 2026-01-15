@@ -31,6 +31,7 @@ const swaggerSpec = swaggerJSDoc(option);
 const app = express();
 
 const allowedOrigins = [
+  "http://localhost:5173",
   "http://localhost:5001",
   "https://todo-workspace-backend.onrender.com",
   "https://api.jeevanadhikari.com.np",
