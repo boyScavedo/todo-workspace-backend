@@ -111,7 +111,7 @@ const router = express.Router();
  *                 error:
  *                   type: string
  *                   nullable: true
- *                   example: null
+ *                   example: 'Some error happened here'
  */
 router.post("/login", loginAuth);
 
@@ -162,7 +162,27 @@ router.post("/login", loginAuth);
  *                 data:
  *                   type: object
  *                   nullable: true
- *                   example: null
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "9398237kj2h..."
+ *                     name:
+ *                       type: string
+ *                       example: 'John Doe'
+ *                     email:
+ *                       type: string
+ *                       format: email
+ *                       example: 'john@example.com'
+ *                     membership:
+ *                       type: number
+ *                       deprecated: true
+ *                       example: 0
+ *                     workspaces:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example:
+ *                           '923082340823408...'
  *                 error:
  *                   type: string
  *                   nullable: true
@@ -202,7 +222,7 @@ router.post("/login", loginAuth);
  *                 error:
  *                   type: string
  *                   nullable: true
- *                   example: null
+ *                   example: 'Some error happened here'
  */
 router.post("/register", registerAuth);
 
@@ -240,7 +260,7 @@ router.post("/register", registerAuth);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: 'Logged out successfully'
+ *                   example: 'Internal server error'
  *                 data:
  *                   type: object
  *                   nullable: true
@@ -248,7 +268,7 @@ router.post("/register", registerAuth);
  *                 error:
  *                   type: string
  *                   nullable: true
- *                   example: null
+ *                   example: 'Some error happened here'
  */
 router.post("/logout", logoutAuth);
 

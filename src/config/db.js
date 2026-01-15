@@ -7,14 +7,23 @@ export const workspaceConnection = mongoose.createConnection(
   process.env.MONGO_WORKSPACES_URI
 );
 
-export function connectDB() {
-  userConnection.on("connected", () => console.log("USER DATABASE CONNECTED"));
-  workspaceConnection.on("connected", () =>
-    console.log("WORKSPACE DATABASE CONNECTED")
-  );
+export async function connectDB() {
+  try {
+    // We wrap the connections in a Promise.all to wait for BOTH to finish
+    await Promise.all([
+      userConnection.asPromise(),
+      workspaceConnection.asPromise(),
+    ]);
 
-  userConnection.on("error", (err) => console.log("USER DATABASE ERROR", err));
-  workspaceConnection.on("error", (err) =>
-    console.log("WORKSPACE DATABASE ERROR", err)
-  );
+    console.log("ALL DATABASES CONNECTED");
+
+    // Optional: Keep your event listeners for logging future errors
+    userConnection.on("error", (err) => console.error("USER DB ERROR:", err));
+    workspaceConnection.on("error", (err) =>
+      console.error("WORKSPACE DB ERROR:", err)
+    );
+  } catch (error) {
+    console.error("DATABASE CONNECTION FAILED:", error);
+    throw error; // Re-throw so your server start logic knows it failed
+  }
 }

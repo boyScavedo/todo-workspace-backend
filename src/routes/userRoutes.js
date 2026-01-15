@@ -130,7 +130,7 @@ router.get("/", getAllUsers);
  *                 error:
  *                   type: string
  *                   nullable: true
- *                   example: error.message
+ *                   example: null
  *       500:
  *         description: Internal server error
  *         content:
@@ -148,7 +148,7 @@ router.get("/", getAllUsers);
  *                 error:
  *                   type: string
  *                   nullable: true
- *                   example: error.message
+ *                   example: 'Some error happened here'
  */
 router.get("/me", authVerification, userVerification);
 

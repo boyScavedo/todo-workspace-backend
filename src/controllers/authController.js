@@ -36,6 +36,7 @@ export async function registerAuth(req, res) {
     const token = generateToken();
     const cookieOption = {
       httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     };
 
     const { salt, hash } = await hashPassword(password);
@@ -109,6 +110,7 @@ export async function loginAuth(req, res) {
     const token = generateToken(user._id);
     const cookieOption = {
       httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     };
 
     const userData = user.toObject();

@@ -20,7 +20,12 @@ const option = {
     },
     servers: [
       {
+        url: "https://api.jeevanadhikari.com.np",
+        description: "Production server",
+      },
+      {
         url: "http://localhost:5001",
+        description: "Local server",
       },
     ],
   },
@@ -41,10 +46,23 @@ const corsOptions = {
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    const isProduction = process.env.NODE_ENV === "production";
+    const isAllowed = allowedOrigins.includes(origin);
+
+    if (isAllowed) {
+      if (
+        isProduction &&
+        origin.startsWith("http://") &&
+        !origin.includes("localhost")
+      ) {
+        return callback(
+          new Error("Insecure origin not allowed in production"),
+          false
+        );
+      }
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("Not allowed by CORS"), false);
     }
   },
   credentials: true,
@@ -61,13 +79,20 @@ app.use("/tw/v1/users", userRoutes);
 app.use("/tw/v1/auth", authRoutes);
 app.use("/tw/v1/workspaces", workspaceRoutes);
 
-// TODO: Update the code so that the server starts only after the database is connected
-try {
-  connectDB();
-} catch (error) {
-  console.log(error);
-} finally {
-  app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-  });
+async function startServer() {
+  try {
+    await connectDB();
+
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is running on port ${process.env.PORT}`);
+    });
+  } catch (error) {
+    console.error(error, "\n Trying again after 1 minute...");
+
+    setTimeout(() => {
+      startServer();
+    }, 1 * 60 * 1000);
+  }
 }
+
+startServer();
