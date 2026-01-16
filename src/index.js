@@ -104,7 +104,7 @@ app.use("/tw/v1/workspaces", workspaceRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/{*path}", (req, res) => {
+app.get("/{*path}", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 

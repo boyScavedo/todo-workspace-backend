@@ -1,12 +1,23 @@
-import { workspaceConnection } from "../config/db.js";
 import User from "../models/User.js";
 import Workspace from "../models/Workspace.js";
 
 export async function getAllWorkspaces(req, res) {
-  try {
-    const userId = req.user.id;
+  const userId = req.user.id;
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 10;
 
-    const workspaces = await Workspace.find({ "members.userId": userId });
+  const skip = (page - 1) * limit;
+
+  try {
+    const totalWorkspaces = await Workspace.countDocuments({
+      "members.userId": userId,
+    });
+
+    const workspaces = await Workspace.find({ "members.userId": userId })
+      .skip(skip)
+      .limit(limit);
+
+    console.log(totalWorkspaces, workspaces);
 
     res.status(200).json({
       message: "Fetched workspaces successfully",

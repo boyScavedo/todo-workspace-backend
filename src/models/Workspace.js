@@ -13,8 +13,9 @@ import { workspaceConnection } from "../config/db.js";
  *         - owner
  *       properties:
  *         _id:
- *           type: mongoose.Types.ObjectId
+ *           type: string
  *           description: The auto-generated id of the workspace (MongoDB ObjectId)
+ *           example: "98739470x98731n..."
  *         name:
  *           type: string
  *           example: "Rato Guras Technology"
@@ -23,26 +24,30 @@ import { workspaceConnection } from "../config/db.js";
  *           maxLenth: 200
  *           default: "A blank canvas has the most potential"
  *         owner:
- *           type: mongoose.Types.ObjectId
+ *           type: string
  *           description: The one who owns the workspace
+ *           example: '93475470x98731n...'
  *         members:
- *           type: object
+ *           type: array
  *           description: All the members who have joined the workspace and their workspace specific details
- *           properties:
- *             userId:
- *               type: string
- *               required: true
- *             roles:
- *               type: string
- *               enum: ['member', 'admin']
- *               default: 'admin'
- *             joinedAt:
- *               type: Date
- *               default: Date.now
+ *           items:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 required: true
+ *               roles:
+ *                 type: string
+ *                 enum: ['member', 'admin']
+ *                 default: 'admin'
+ *               joinedAt:
+ *                 type: string
+ *                 format: date-time
  *         inviteCode:
- *           type: String
+ *           type: string
  *           unique: true
  *           description: Unique slug code for joining the workspace
+ *           example: '098342b09234028...'
  *         createdAt:
  *           type: string
  *           format: date-time

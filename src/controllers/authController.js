@@ -37,6 +37,8 @@ export async function registerAuth(req, res) {
     const cookieOption = {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
     };
 
     const { salt, hash } = await hashPassword(password);
@@ -111,6 +113,8 @@ export async function loginAuth(req, res) {
     const cookieOption = {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
     };
 
     const userData = user.toObject();
