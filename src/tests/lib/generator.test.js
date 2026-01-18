@@ -16,17 +16,8 @@ describe('Generator Utility Function Library', () => {
 
         test('should not generate same code even after 5 loops', () => {
 
-            var arr = [1, 2, 3, 4, 5]
-            for(var i = 0; i < 5; i++) {
-                arr[i] = workspaceInviteCodeGenerator()
-            }
-
-            for(var i = 0; i < 5; i++) {
-                for(var j = 0; j < 5; j++) {
-                    if (i !== j){
-                    expect(arr[i]).not.toBe(arr[j])
-                    }}
-            }
+            const arr = Array.from({length:5}, () => workspaceInviteCodeGenerator())
+            expect(new Set(arr).size).toBe(arr.length)
         })
     })
     describe('generateToken', () => {

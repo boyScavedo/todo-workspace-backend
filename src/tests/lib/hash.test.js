@@ -1,5 +1,8 @@
 import bcrypt from 'bcryptjs'
 import { hashPassword, comparePassword } from "../../lib/hash.js";
+
+process.env.HASH_ITERATION = '10';
+
 describe('Hash Utility Function Library', () => {
     describe('hashPassword', () => {
         test('is hashed password being generated', async () => {
