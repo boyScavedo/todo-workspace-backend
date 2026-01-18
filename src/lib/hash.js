@@ -1,4 +1,3 @@
-// import "dotenv/config";
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 
@@ -7,16 +6,12 @@ import bcrypt from "bcryptjs";
 // Inputs: password from request body
 // Outputs: salt and hash of the password
 export async function hashPassword(password) {
-  const salt = await bcrypt.genSalt(Number(process.env.HASH_ITERATION));
-  const hash = await bcrypt.hash(password, salt);
+  const salt = (await bcrypt.genSalt(Number(process.env.HASH_ITERATION))).toString('hex');
+  const hash = (await bcrypt.hash(password, salt)).toString('hex');
   return { salt, hash };
 }
 
 export async function comparePassword(givenPassword, userPassword) {
   const response = await bcrypt.compare(givenPassword, userPassword);
   return response;
-}
-
-export async function generateHash(password, salt) {
-  return await bcrypt.hash(password, salt);
 }
