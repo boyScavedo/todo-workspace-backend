@@ -8,7 +8,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 
-import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import workspaceRoutes from "./routes/workspaceRoutes.js";
@@ -108,20 +107,4 @@ app.get("/{*path}", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-async function startServer() {
-  try {
-    await connectDB();
-
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is running on port ${process.env.PORT}`);
-    });
-  } catch (error) {
-    console.error(error, "\n Trying again after 1 minute...");
-
-    setTimeout(() => {
-      startServer();
-    }, 1 * 60 * 1000);
-  }
-}
-
-startServer();
+export default app
