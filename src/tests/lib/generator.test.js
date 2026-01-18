@@ -15,10 +15,18 @@ describe('Generator Utility Function Library', () => {
         })
 
         test('should not generate same code even after 5 loops', () => {
-            const code1 = workspaceInviteCodeGenerator()
-            const code2 = workspaceInviteCodeGenerator()
 
-            expect(code1).not.toBe(code2)
+            var arr = [1, 2, 3, 4, 5]
+            for(var i = 0; i < 5; i++) {
+                arr[i] = workspaceInviteCodeGenerator()
+            }
+
+            for(var i = 0; i < 5; i++) {
+                for(var j = 0; j < 5; j++) {
+                    if (i !== j){
+                    expect(arr[i]).not.toBe(arr[j])
+                    }}
+            }
         })
     })
     describe('generateToken', () => {

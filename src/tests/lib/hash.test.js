@@ -8,9 +8,7 @@ describe('Hash Utility Function Library', () => {
         expect(hashedPassword.hash).toBeDefined()
         })
     })
-})
-
-describe('comparePassword', () => {
+    describe('comparePassword', () => {
     test('is compare password working', async () => {
     const userHashedPassword = await hashPassword('Test Password')
     const comparison = await comparePassword('Test Password', userHashedPassword.hash)
@@ -23,10 +21,11 @@ describe('comparePassword', () => {
     expect(comparison).toBe(true)
 })
 
-    test('is compare password returning true when given invalid password', async () => {
+    test('is compare password returning false when given invalid password', async () => {
         const userHashedPassword = await hashPassword('Test Password')
         const comparison = await comparePassword("Test Incorrect Password", userHashedPassword.hash)
         expect(comparison).toBe(false)
     })
+})
 })
 

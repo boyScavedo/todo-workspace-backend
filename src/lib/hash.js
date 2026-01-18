@@ -6,8 +6,8 @@ import bcrypt from "bcryptjs";
 // Inputs: password from request body
 // Outputs: salt and hash of the password
 export async function hashPassword(password) {
-  const salt = (await bcrypt.genSalt(Number(process.env.HASH_ITERATION))).toString('hex');
-  const hash = (await bcrypt.hash(password, salt)).toString('hex');
+  const salt = (await bcrypt.genSalt(Number(process.env.HASH_ITERATION)));
+  const hash = (await bcrypt.hash(password, salt));
   return { salt, hash };
 }
 
