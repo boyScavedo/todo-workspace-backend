@@ -1,4 +1,3 @@
-import { userConnection } from '../../config/db.js'
 import request from 'supertest'
 
 import app from "../../app.js"
